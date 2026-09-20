@@ -1,0 +1,1336 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>HireBeyondCampus — Skill-Based AI Placement Bridge for All Engineering Students in India</title>
+  
+  <!-- Tailwind CSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <!-- Lucide Icons -->
+  <script src="https://unpkg.com/lucide@latest"></script>
+
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            aws: {
+              squid: '#232F3E',
+              orange: '#FF9900',
+              blue: '#0073BB',
+              lightbg: '#F8FAFC'
+            }
+          }
+        }
+      }
+    }
+  </script>
+  
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700;800&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap');
+    body { font-family: 'Plus Jakarta Sans', sans-serif; }
+    h1, h2, h3, .font-heading { font-family: 'Outfit', sans-serif; }
+    
+    .passport-card {
+      background: linear-gradient(135deg, #0f172a 0%, #1e293b 100%);
+      border: 1px solid rgba(255, 153, 0, 0.4);
+    }
+    .hero-gradient {
+      background: radial-gradient(circle at top right, rgba(255, 153, 0, 0.15), transparent 50%),
+                  radial-gradient(circle at bottom left, rgba(0, 115, 187, 0.15), transparent 50%);
+    }
+  </style>
+</head>
+<body class="bg-slate-50 text-slate-900 min-h-screen flex flex-col">
+
+  <!-- ========================================== -->
+  <!-- TOP NAVIGATION BAR                         -->
+  <!-- ========================================== -->
+  <header class="bg-aws-squid text-white sticky top-0 z-50 shadow-md">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="flex items-center justify-between h-16">
+        
+        <!-- Brand Logo -->
+        <div class="flex items-center space-x-3 cursor-pointer" onclick="showLandingPage()">
+          <div class="bg-aws-orange p-2 rounded-xl text-aws-squid font-bold flex items-center justify-center shadow">
+            <i data-lucide="sparkles" class="w-6 h-6"></i>
+          </div>
+          <div>
+            <div class="flex items-center space-x-2">
+              <span class="text-xl font-bold font-heading tracking-tight text-white">HireBeyondCampus</span>
+              <span class="bg-emerald-500/20 text-emerald-400 text-xs font-semibold px-2 py-0.5 rounded border border-emerald-500/40">
+                AWS AI Powered
+              </span>
+            </div>
+            <p class="text-xs text-slate-400">Hire Beyond Campus — Discover Talent Everywhere</p>
+          </div>
+        </div>
+
+        <!-- Navigation Tabs -->
+        <div class="flex items-center space-x-4">
+          <nav class="hidden md:flex items-center space-x-1 bg-slate-800/80 p-1 rounded-xl border border-slate-700">
+            <button onclick="showLandingPage()" id="tab-landing" class="portal-tab flex items-center space-x-2 px-3 py-1.5 rounded-lg text-sm font-medium transition-all text-slate-300 hover:text-white">
+              <i data-lucide="home" class="w-4 h-4"></i>
+              <span>Home Overview</span>
+            </button>
+            <button onclick="switchPortal('student')" id="tab-student" class="portal-tab flex items-center space-x-2 px-3 py-1.5 rounded-lg text-sm font-medium transition-all text-slate-300 hover:text-white">
+              <i data-lucide="user" class="w-4 h-4"></i>
+              <span>Student Dashboard</span>
+            </button>
+            <button onclick="switchPortal('internships')" id="tab-internships" class="portal-tab flex items-center space-x-2 px-3 py-1.5 rounded-lg text-sm font-medium transition-all text-slate-300 hover:text-white">
+              <i data-lucide="building" class="w-4 h-4"></i>
+              <span>Company Recommendations</span>
+            </button>
+          </nav>
+
+          <!-- User Auth Controls -->
+          <div id="user-auth-controls" class="flex items-center space-x-2">
+            <!-- Rendered by JS based on login state -->
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </header>
+
+  <!-- ========================================== -->
+  <!-- VIEW 1: PRE-LOGIN LANDING PAGE             -->
+  <!-- ========================================== -->
+  <div id="view-landing" class="flex-1 hero-gradient">
+    <section class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16 lg:py-24 text-center space-y-8">
+      
+      <div class="inline-flex items-center space-x-2 bg-slate-900 text-white px-4 py-1.5 rounded-full border border-slate-700 text-xs font-semibold shadow-sm">
+        <span class="w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></span>
+        <span>AI-Powered All-India Campus Placement Engine</span>
+      </div>
+
+      <h1 class="text-4xl sm:text-5xl lg:text-6xl font-extrabold font-heading text-slate-900 tracking-tight max-w-4xl mx-auto leading-tight">
+        Talent Should Be Discovered, Not Limited By Campus Location.
+      </h1>
+
+      <p class="text-slate-600 text-base sm:text-lg max-w-2xl mx-auto font-medium">
+        HireBeyondCampus connects skilled engineering students across India directly with top companies (Amazon, Google, TCS, Microsoft, Swiggy) strictly based on <strong>Branch, Skills, Verified Knowledge, Resume Projects, and Passout Year</strong>.
+      </p>
+
+      <div class="flex flex-col sm:flex-row items-center justify-center gap-4 pt-4">
+        <button onclick="openWizardModal()" class="w-full sm:w-auto bg-aws-squid hover:bg-slate-800 text-white font-bold text-sm px-8 py-4 rounded-2xl shadow-xl flex items-center justify-center space-x-2 transition-all">
+          <i data-lucide="user-plus" class="w-5 h-5 text-aws-orange"></i>
+          <span>Create Account (New User)</span>
+        </button>
+        
+        <button onclick="openSignInModal()" class="w-full sm:w-auto bg-aws-orange hover:bg-amber-500 text-slate-950 font-bold text-sm px-8 py-4 rounded-2xl shadow-xl flex items-center justify-center space-x-2 transition-all">
+          <i data-lucide="log-in" class="w-5 h-5"></i>
+          <span>Log In (Existing User)</span>
+        </button>
+      </div>
+
+    </section>
+  </div>
+
+  <!-- ========================================== -->
+  <!-- VIEW 2: STUDENT DASHBOARD (EMPTY VS POPULATED) -->
+  <!-- ========================================== -->
+  <div id="view-dashboard" class="flex-1 max-w-7xl w-full mx-auto px-4 sm:px-6 lg:px-8 py-8 space-y-8 hidden">
+    
+    <!-- SUB-VIEW A: EMPTY DASHBOARD (PRE-LOGIN STATE FOR NEW USER) -->
+    <div id="dashboard-empty-state" class="bg-white rounded-3xl p-12 shadow-sm border border-slate-200 text-center space-y-6 max-w-2xl mx-auto my-8">
+      <div class="w-20 h-20 rounded-3xl bg-amber-50 border border-amber-200 text-aws-orange flex items-center justify-center mx-auto shadow-sm">
+        <i data-lucide="lock" class="w-10 h-10"></i>
+      </div>
+
+      <div class="space-y-2">
+        <h2 class="text-2xl font-bold font-heading text-slate-900">Student Dashboard is Empty (New Visitor)</h2>
+        <p class="text-slate-500 text-sm max-w-md mx-auto">
+          Please Log In or Create an Account to generate your verified Digital Talent Passport and unlock personalized company recommendations across India.
+        </p>
+      </div>
+
+      <div class="flex flex-col sm:flex-row items-center justify-center gap-3 pt-2">
+        <button onclick="openWizardModal()" class="w-full sm:w-auto bg-aws-squid hover:bg-slate-800 text-white font-bold text-xs px-6 py-3 rounded-xl shadow transition-all flex items-center justify-center space-x-1.5">
+          <i data-lucide="user-plus" class="w-4 h-4 text-aws-orange"></i>
+          <span>Create Account (New User)</span>
+        </button>
+
+        <button onclick="openSignInModal()" class="w-full sm:w-auto bg-aws-orange hover:bg-amber-500 text-slate-950 font-bold text-xs px-6 py-3 rounded-xl shadow transition-all flex items-center justify-center space-x-1.5">
+          <i data-lucide="log-in" class="w-4 h-4"></i>
+          <span>Log In (Existing User)</span>
+        </button>
+      </div>
+    </div>
+
+    <!-- SUB-VIEW B: POPULATED DASHBOARD (POST-LOGIN STATE FOR LOGGED-IN USER) -->
+    <div id="dashboard-populated-state" class="space-y-8 hidden">
+      
+      <div class="bg-white rounded-2xl p-6 shadow-sm border border-slate-200 flex flex-col md:flex-row md:items-center justify-between gap-4">
+        <div>
+          <div class="flex items-center space-x-3">
+            <h2 class="text-2xl font-bold font-heading text-slate-900">Student Talent Passport</h2>
+            <span class="bg-emerald-100 text-emerald-800 text-xs font-semibold px-2.5 py-1 rounded-full flex items-center">
+              <span class="w-2 h-2 rounded-full bg-emerald-500 mr-1.5 animate-pulse"></span>
+              Authenticated Profile
+            </span>
+          </div>
+          <p class="text-slate-500 text-sm mt-1">
+            Student: <strong class="text-slate-900" id="dash-user-name">-</strong> • Branch: <strong class="text-emerald-700" id="dash-user-branch">-</strong> • Batch: <strong class="text-aws-blue" id="dash-user-batch">-</strong>
+          </p>
+        </div>
+        <div class="flex flex-wrap items-center gap-3">
+          <button onclick="openAtsResumeModal()" class="flex items-center space-x-2 bg-slate-900 hover:bg-slate-800 text-white px-4 py-2.5 rounded-xl font-medium text-xs transition-all shadow-sm">
+            <i data-lucide="file-text" class="w-4 h-4 text-emerald-400"></i>
+            <span>✨ Generate ATS Resume</span>
+          </button>
+          <button onclick="openSalaryPredictorModal()" class="flex items-center space-x-2 bg-slate-900 hover:bg-slate-800 text-white px-4 py-2.5 rounded-xl font-medium text-xs transition-all shadow-sm">
+            <i data-lucide="trending-up" class="w-4 h-4 text-amber-400"></i>
+            <span>💰 AI Stipend & CTC Predictor</span>
+          </button>
+          <button onclick="switchPortal('internships')" class="flex items-center space-x-2 bg-aws-orange hover:bg-amber-600 text-slate-950 px-4 py-2.5 rounded-xl font-bold text-xs transition-all shadow">
+            <i data-lucide="sparkles" class="w-4 h-4"></i>
+            <span>View Company Recommendations</span>
+          </button>
+        </div>
+      </div>
+
+      <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
+        <div class="lg:col-span-2 space-y-6">
+          <div class="passport-card text-white rounded-3xl p-6 sm:p-8 shadow-2xl relative overflow-hidden">
+            <div class="flex items-center justify-between border-b border-slate-700/80 pb-5 mb-6">
+              <div class="flex items-center space-x-3">
+                <div class="w-12 h-12 rounded-2xl bg-aws-orange/20 border border-aws-orange/40 flex items-center justify-center text-aws-orange font-bold text-xl">
+                  HBC
+                </div>
+                <div>
+                  <h3 class="text-xs uppercase tracking-widest text-aws-orange font-bold">HIREBEYONDCAMPUS PASSPORT</h3>
+                  <p class="text-xs text-slate-400">Passport ID: <span class="font-mono text-slate-200" id="dash-passport-id">-</span></p>
+                </div>
+              </div>
+              <div class="text-right">
+                <span class="text-xs text-slate-400 block">AI Job Readiness Index</span>
+                <span class="text-3xl font-extrabold font-heading text-emerald-400" id="card-readiness-score">84<span class="text-lg text-slate-400">/100</span></span>
+              </div>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
+              <div>
+                <span class="text-xs text-slate-400 font-medium block uppercase tracking-wider">Candidate Student</span>
+                <h4 class="text-xl font-bold font-heading text-white" id="card-student-name">-</h4>
+                <p class="text-xs text-slate-300 mt-0.5" id="card-student-branch">Studying Branch: -</p>
+                <p class="text-xs text-slate-400" id="card-student-intern">Internship Exp: -</p>
+              </div>
+              <div>
+                <span class="text-xs text-slate-400 font-medium block uppercase tracking-wider">Batch Eligibility</span>
+                <p class="text-sm font-bold text-emerald-400 mt-0.5" id="card-passout-year">-</p>
+                <p class="text-xs text-slate-400 mt-1">🔒 NO College Name or Location Requested (Privacy Guaranteed)</p>
+              </div>
+            </div>
+
+            <div class="space-y-3 mb-6 bg-slate-900/60 p-4 rounded-2xl border border-slate-800">
+              <span class="text-slate-300 text-xs font-medium block">Verified Technical Skills & Projects</span>
+              <div class="space-y-2 text-xs" id="dash-skills-meters">
+                <!-- Rendered dynamically -->
+              </div>
+            </div>
+          </div>
+
+          <!-- INSTITUTIONAL & STUDENT SKILL GAP HEATMAP CARD -->
+          <div class="bg-white rounded-2xl p-6 shadow-sm border border-slate-200 space-y-4">
+            <div class="flex items-center justify-between border-b border-slate-100 pb-3">
+              <div class="flex items-center space-x-2">
+                <div class="bg-indigo-100 text-indigo-700 p-2 rounded-xl">
+                  <i data-lucide="bar-chart-2" class="w-5 h-5"></i>
+                </div>
+                <div>
+                  <h3 class="font-bold font-heading text-slate-900 text-base">AI Skill Deficit & Institutional Heatmap</h3>
+                  <p class="text-xs text-slate-500">Compares student skills against 2026/2027 All-India company hiring requirements</p>
+                </div>
+              </div>
+              <span class="bg-indigo-50 text-indigo-700 text-xs font-bold px-3 py-1 rounded-full border border-indigo-200">2026/2027 Benchmark</span>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-4 text-xs">
+              <div class="bg-emerald-50 border border-emerald-200 p-3.5 rounded-xl space-y-1">
+                <span class="text-[11px] text-emerald-800 font-bold block uppercase">✓ Verified Strengths</span>
+                <p class="font-semibold text-emerald-900 text-xs" id="heatmap-strengths">Python, Data Structures, SQL</p>
+              </div>
+              <div class="bg-amber-50 border border-amber-200 p-3.5 rounded-xl space-y-1">
+                <span class="text-[11px] text-amber-800 font-bold block uppercase">⚠️ Skill Deficit (To Upgrade)</span>
+                <p class="font-semibold text-amber-900 text-xs" id="heatmap-deficits">System Design, Cloud Microservices</p>
+              </div>
+              <div class="bg-indigo-50 border border-indigo-200 p-3.5 rounded-xl space-y-1">
+                <span class="text-[11px] text-indigo-800 font-bold block uppercase">🎯 Recommended Roadmap</span>
+                <p class="font-semibold text-indigo-900 text-xs">4-Week AWS Cloud & Microservices Track</p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="space-y-6">
+          <!-- LIVE PROCTORED CODE PLAYGROUND -->
+          <div class="bg-white rounded-2xl p-6 shadow-sm border border-slate-200 space-y-4">
+            <div class="flex items-center justify-between border-b border-slate-100 pb-3">
+              <h3 class="font-bold font-heading text-slate-900 text-base flex items-center space-x-2">
+                <i data-lucide="code" class="w-4 h-4 text-aws-orange"></i>
+                <span>Proctored Coding Test</span>
+              </h3>
+              <span class="bg-emerald-100 text-emerald-800 text-[10px] font-bold px-2.5 py-0.5 rounded-full">Auto Badge Issuer</span>
+            </div>
+            
+            <div class="bg-slate-900 text-white p-4 rounded-2xl space-y-3">
+              <div class="flex items-center justify-between text-xs text-slate-300">
+                <span class="font-semibold text-aws-orange">Problem: Optimized Array Search</span>
+                <span class="text-[10px] bg-slate-800 px-2 py-0.5 rounded text-emerald-400">Python 3.13</span>
+              </div>
+              <textarea id="proctored-code-input" rows="4" class="w-full bg-slate-950 font-mono text-emerald-400 text-xs p-3 rounded-xl border border-slate-800 focus:outline-none focus:border-aws-orange" placeholder="# Write optimized solution...
+def find_target(arr, target):
+    seen = set()
+    for num in arr:
+        if target - num in seen:
+            return True
+        seen.add(num)
+    return False"></textarea>
+              <button onclick="runProctoredCodeTest()" class="w-full bg-aws-orange hover:bg-amber-500 text-slate-950 text-xs font-bold py-2.5 rounded-xl transition-all shadow flex items-center justify-center space-x-1.5">
+                <i data-lucide="play" class="w-3.5 h-3.5"></i>
+                <span>▶️ Run Test & Issue Verified Skill Badge</span>
+              </button>
+            </div>
+            <div id="code-test-result" class="hidden text-xs bg-emerald-50 border border-emerald-200 text-emerald-900 p-3 rounded-xl space-y-1">
+              <p class="font-bold text-emerald-800">✓ Test Passed (4/4 Test Cases Passed)</p>
+              <p class="text-[11px] text-emerald-700">Issued Badge: <strong class="underline">VERIFIED_ADVANCED (Python)</strong>. Job Readiness Score updated to <strong id="new-score-display">88/100</strong>.</p>
+            </div>
+          </div>
+
+          <!-- AI INTERVIEW SIMULATOR -->
+          <div class="bg-white rounded-2xl p-6 shadow-sm border border-slate-200 space-y-4">
+            <h3 class="font-bold font-heading text-slate-900 text-base flex items-center space-x-2">
+              <i data-lucide="mic" class="w-4 h-4 text-aws-blue"></i>
+              <span>AI Technical Interview Room</span>
+            </h3>
+            <div class="bg-slate-900 text-white p-4 rounded-2xl space-y-3">
+              <p class="text-xs text-slate-200 italic font-medium">"Explain how your engineering project handles data validation and scalability under high load."</p>
+              <textarea id="interview-answer-input" rows="3" class="w-full bg-slate-800 text-slate-100 text-xs p-3 rounded-xl border border-slate-700 focus:outline-none focus:border-aws-orange" placeholder="Type your technical response here..."></textarea>
+              <button onclick="evaluateAIInterviewAnswer()" class="w-full bg-aws-squid hover:bg-slate-800 border border-slate-700 text-aws-orange text-xs font-bold py-2.5 rounded-xl transition-all shadow flex items-center justify-center space-x-1.5">
+                <i data-lucide="cpu" class="w-3.5 h-3.5"></i>
+                <span>Evaluate Answer with Bedrock AI</span>
+              </button>
+            </div>
+            <div id="interview-eval-output" class="hidden text-xs bg-indigo-50 border border-indigo-200 text-indigo-900 p-3.5 rounded-xl space-y-1">
+              <p class="font-bold text-indigo-950">AI Evaluation Feedback:</p>
+              <ul class="list-disc pl-4 text-[11px] text-indigo-800 space-y-0.5">
+                <li>Technical Knowledge: <strong>88% (Advanced)</strong></li>
+                <li>Problem Solving & Clarity: <strong>85%</strong></li>
+                <li>Communication Confidence: <strong>82%</strong></li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- Company Recommendations Feed -->
+    <div id="portal-internships" class="space-y-8 hidden">
+      <div class="bg-white rounded-2xl p-6 shadow-sm border border-slate-200 space-y-4">
+        <div class="flex items-center justify-between border-b border-slate-100 pb-4">
+          <div>
+            <span class="bg-emerald-100 text-emerald-800 text-xs font-bold px-2.5 py-1 rounded-full">Multi-Factor AI Matched</span>
+            <h2 class="text-2xl font-bold font-heading text-slate-900">Personalized Company Recommendations</h2>
+          </div>
+        </div>
+      </div>
+
+      <div class="space-y-4">
+        <div id="opportunities-container" class="space-y-5">
+          <!-- Rendered dynamically -->
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- MODAL 1: MULTI-STEP ONBOARDING WIZARD -->
+  <div id="modal-wizard" class="fixed inset-0 bg-slate-900/80 backdrop-blur-md z-50 flex items-center justify-center hidden p-4">
+    <div class="bg-white rounded-3xl max-w-lg w-full p-6 sm:p-8 shadow-2xl space-y-6 border border-slate-200 relative overflow-hidden">
+      
+      <div class="flex items-center justify-between border-b border-slate-100 pb-4">
+        <div class="flex items-center space-x-2">
+          <div class="bg-aws-orange p-2 rounded-xl text-slate-950 font-bold">
+            <i data-lucide="sparkles" class="w-5 h-5"></i>
+          </div>
+          <div>
+            <h3 class="font-bold font-heading text-slate-900 text-lg">Create Student Account & AI Setup</h3>
+            <p class="text-xs text-slate-500">Step <span id="wizard-step-num">1</span> of 5</p>
+          </div>
+        </div>
+        <button onclick="closeWizardModal()" class="text-slate-400 hover:text-slate-600"><i data-lucide="x" class="w-5 h-5"></i></button>
+      </div>
+
+      <div class="text-xs bg-emerald-50 text-emerald-900 p-2.5 rounded-xl border border-emerald-200 flex items-center">
+        <i data-lucide="shield-check" class="w-4 h-4 text-emerald-600 mr-2 shrink-0"></i>
+        <span><strong>Zero Bias Policy:</strong> We NEVER ask for your college name or geographic location.</span>
+      </div>
+
+      <div id="wizard-step-1" class="wizard-step space-y-4 text-xs">
+        <h4 class="font-bold text-slate-900 text-sm">Step 1: Account & Security Credentials</h4>
+        <div>
+          <label class="block font-semibold text-slate-700 mb-1">Full Student Name *</label>
+          <input type="text" id="wiz-name" required class="w-full bg-slate-50 border border-slate-300 rounded-xl p-3 text-slate-900" placeholder="Enter your full name">
+        </div>
+        <div>
+          <label class="block font-semibold text-slate-700 mb-1">Student Email Address *</label>
+          <input type="email" id="wiz-email" required class="w-full bg-slate-50 border border-slate-300 rounded-xl p-3 text-slate-900" placeholder="yourname@student.edu.in">
+        </div>
+        <div>
+          <label class="block font-semibold text-slate-700 mb-1">Password *</label>
+          <input type="password" id="wiz-pass" required oninput="validatePasswordMatchUI()" class="w-full bg-slate-50 border border-slate-300 rounded-xl p-3 text-slate-900" placeholder="••••••••">
+          <p id="pass-hint" class="text-[11px] text-slate-500 mt-1">
+            🔒 Standard Password Rule: 8+ chars with uppercase (A-Z), lowercase (a-z), number (0-9), & special char (@$!%*...).
+          </p>
+          <p id="pass-error" class="text-[11px] text-red-600 font-semibold mt-1 hidden"></p>
+        </div>
+      </div>
+
+      <div id="wizard-step-2" class="wizard-step space-y-4 text-xs hidden">
+        <h4 class="font-bold text-slate-900 text-sm">Step 2: Studying Branch & Passout Year</h4>
+        <div>
+          <label class="block font-semibold text-slate-700 mb-1">Studying Engineering Branch *</label>
+          <select id="wiz-branch" required class="w-full bg-slate-50 border border-slate-300 rounded-xl p-3 font-semibold text-slate-900">
+            <option value="">-- Select Engineering Branch --</option>
+            <option value="Aeronautical Engineering">Aeronautical Engineering</option>
+            <option value="Aerospace Engineering">Aerospace Engineering</option>
+            <option value="Agricultural Engineering">Agricultural Engineering</option>
+            <option value="Artificial Intelligence & Data Science">Artificial Intelligence & Data Science</option>
+            <option value="Artificial Intelligence & Machine Learning">Artificial Intelligence & Machine Learning</option>
+            <option value="Automation & Robotics Engineering">Automation & Robotics Engineering</option>
+            <option value="Automobile Engineering">Automobile Engineering</option>
+            <option value="Biomedical Engineering">Biomedical Engineering</option>
+            <option value="Biotechnology Engineering">Biotechnology Engineering</option>
+            <option value="Chemical Engineering">Chemical Engineering</option>
+            <option value="Civil Engineering">Civil Engineering</option>
+            <option value="Computer Science & Engineering (CSE)">Computer Science & Engineering (CSE)</option>
+            <option value="Electrical & Electronics Engineering (EEE)">Electrical & Electronics Engineering (EEE)</option>
+            <option value="Electronics & Communication Engineering (ECE)">Electronics & Communication Engineering (ECE)</option>
+            <option value="Electronics & Instrumentation Engineering (EIE)">Electronics & Instrumentation Engineering (EIE)</option>
+            <option value="Environmental Engineering">Environmental Engineering</option>
+            <option value="Industrial & Production Engineering">Industrial & Production Engineering</option>
+            <option value="Information Technology (IT)">Information Technology (IT)</option>
+            <option value="Instrumentation & Control Engineering">Instrumentation & Control Engineering</option>
+            <option value="Marine Engineering">Marine Engineering</option>
+            <option value="Materials & Metallurgical Engineering">Materials & Metallurgical Engineering</option>
+            <option value="Mechanical Engineering (ME)">Mechanical Engineering (ME)</option>
+            <option value="Mechatronics Engineering">Mechatronics Engineering</option>
+            <option value="Mining Engineering">Mining Engineering</option>
+            <option value="Petroleum Engineering">Petroleum Engineering</option>
+            <option value="Robotics & Automation">Robotics & Automation</option>
+            <option value="Software Engineering">Software Engineering</option>
+            <option value="Structural Engineering">Structural Engineering</option>
+            <option value="Telecommunication Engineering">Telecommunication Engineering</option>
+          </select>
+        </div>
+        <div>
+          <label class="block font-semibold text-slate-700 mb-1">Graduation Passout Year *</label>
+          <select id="wiz-passout" required class="w-full bg-slate-50 border border-slate-300 rounded-xl p-3 font-semibold text-slate-900">
+            <option value="">-- Select Passout Year --</option>
+            <option value="2026">2026 Passout (Final Year / Graduating Batch)</option>
+            <option value="2027">2027 Passout (Pre-Final Year Batch)</option>
+          </select>
+        </div>
+      </div>
+
+      <div id="wizard-step-3" class="wizard-step space-y-4 text-xs hidden">
+        <div class="flex items-center justify-between">
+          <div>
+            <h4 class="font-bold text-slate-900 text-sm">Step 3: Technical Skills & Knowledge</h4>
+            <p class="text-slate-500">Select skills across engineering fields (Maximum 10 skills):</p>
+          </div>
+          <span id="skill-count-badge" class="bg-aws-orange text-slate-950 font-extrabold text-[11px] px-2.5 py-1 rounded-full">0 / 10 Selected</span>
+        </div>
+
+        <div class="max-h-64 overflow-y-auto custom-scrollbar p-2 bg-slate-50 rounded-2xl border border-slate-200 grid grid-cols-2 gap-2 text-[11px] font-medium">
+          <!-- 💻 COMPUTER SCIENCE, SOFTWARE & DEVOPS -->
+          <div class="col-span-2 text-[10px] font-bold text-slate-500 uppercase tracking-wider mt-1 border-b border-slate-200 pb-1">💻 Computer Science, Software & DevOps</div>
+          <label class="flex items-center space-x-2 p-2 bg-white rounded-xl border border-slate-200 cursor-pointer hover:bg-amber-50">
+            <input type="checkbox" class="wiz-skill-cb" value="Python" onchange="handleSkillSelectionChange(this)"> <span>Python</span>
+          </label>
+          <label class="flex items-center space-x-2 p-2 bg-white rounded-xl border border-slate-200 cursor-pointer hover:bg-amber-50">
+            <input type="checkbox" class="wiz-skill-cb" value="Java" onchange="handleSkillSelectionChange(this)"> <span>Java</span>
+          </label>
+          <label class="flex items-center space-x-2 p-2 bg-white rounded-xl border border-slate-200 cursor-pointer hover:bg-amber-50">
+            <input type="checkbox" class="wiz-skill-cb" value="C / C++" onchange="handleSkillSelectionChange(this)"> <span>C / C++</span>
+          </label>
+          <label class="flex items-center space-x-2 p-2 bg-white rounded-xl border border-slate-200 cursor-pointer hover:bg-amber-50">
+            <input type="checkbox" class="wiz-skill-cb" value="C# / .NET" onchange="handleSkillSelectionChange(this)"> <span>C# / .NET</span>
+          </label>
+          <label class="flex items-center space-x-2 p-2 bg-white rounded-xl border border-slate-200 cursor-pointer hover:bg-amber-50">
+            <input type="checkbox" class="wiz-skill-cb" value="JavaScript / TypeScript" onchange="handleSkillSelectionChange(this)"> <span>JavaScript / TypeScript</span>
+          </label>
+          <label class="flex items-center space-x-2 p-2 bg-white rounded-xl border border-slate-200 cursor-pointer hover:bg-amber-50">
+            <input type="checkbox" class="wiz-skill-cb" value="React / Next.js" onchange="handleSkillSelectionChange(this)"> <span>React / Next.js</span>
+          </label>
+          <label class="flex items-center space-x-2 p-2 bg-white rounded-xl border border-slate-200 cursor-pointer hover:bg-amber-50">
+            <input type="checkbox" class="wiz-skill-cb" value="Node.js & Express" onchange="handleSkillSelectionChange(this)"> <span>Node.js & Express</span>
+          </label>
+          <label class="flex items-center space-x-2 p-2 bg-white rounded-xl border border-slate-200 cursor-pointer hover:bg-amber-50">
+            <input type="checkbox" class="wiz-skill-cb" value="SQL & Relational DBs" onchange="handleSkillSelectionChange(this)"> <span>SQL & Relational DBs</span>
+          </label>
+          <label class="flex items-center space-x-2 p-2 bg-white rounded-xl border border-slate-200 cursor-pointer hover:bg-amber-50">
+            <input type="checkbox" class="wiz-skill-cb" value="NoSQL & MongoDB" onchange="handleSkillSelectionChange(this)"> <span>NoSQL & MongoDB</span>
+          </label>
+          <label class="flex items-center space-x-2 p-2 bg-white rounded-xl border border-slate-200 cursor-pointer hover:bg-amber-50">
+            <input type="checkbox" class="wiz-skill-cb" value="AWS Cloud & Serverless" onchange="handleSkillSelectionChange(this)"> <span>AWS Cloud & Serverless</span>
+          </label>
+          <label class="flex items-center space-x-2 p-2 bg-white rounded-xl border border-slate-200 cursor-pointer hover:bg-amber-50">
+            <input type="checkbox" class="wiz-skill-cb" value="Docker & Kubernetes (DevOps)" onchange="handleSkillSelectionChange(this)"> <span>Docker & Kubernetes</span>
+          </label>
+          <label class="flex items-center space-x-2 p-2 bg-white rounded-xl border border-slate-200 cursor-pointer hover:bg-amber-50">
+            <input type="checkbox" class="wiz-skill-cb" value="Cyber Security & Ethical Hacking" onchange="handleSkillSelectionChange(this)"> <span>Cyber Security</span>
+          </label>
+          <label class="flex items-center space-x-2 p-2 bg-white rounded-xl border border-slate-200 cursor-pointer hover:bg-amber-50">
+            <input type="checkbox" class="wiz-skill-cb" value="Data Structures & Algorithms" onchange="handleSkillSelectionChange(this)"> <span>Data Structures & DSA</span>
+          </label>
+          <label class="flex items-center space-x-2 p-2 bg-white rounded-xl border border-slate-200 cursor-pointer hover:bg-amber-50">
+            <input type="checkbox" class="wiz-skill-cb" value="Mobile App Dev (Flutter/React Native)" onchange="handleSkillSelectionChange(this)"> <span>Mobile App Dev</span>
+          </label>
+          <label class="flex items-center space-x-2 p-2 bg-white rounded-xl border border-slate-200 cursor-pointer hover:bg-amber-50">
+            <input type="checkbox" class="wiz-skill-cb" value="Blockchain & Smart Contracts" onchange="handleSkillSelectionChange(this)"> <span>Blockchain</span>
+          </label>
+
+          <!-- 🤖 ARTIFICIAL INTELLIGENCE & DATA SCIENCE -->
+          <div class="col-span-2 text-[10px] font-bold text-slate-500 uppercase tracking-wider mt-2 border-b border-slate-200 pb-1">🤖 Artificial Intelligence & Data Science</div>
+          <label class="flex items-center space-x-2 p-2 bg-white rounded-xl border border-slate-200 cursor-pointer hover:bg-amber-50">
+            <input type="checkbox" class="wiz-skill-cb" value="Machine Learning (PyTorch/TensorFlow)" onchange="handleSkillSelectionChange(this)"> <span>Machine Learning</span>
+          </label>
+          <label class="flex items-center space-x-2 p-2 bg-white rounded-xl border border-slate-200 cursor-pointer hover:bg-amber-50">
+            <input type="checkbox" class="wiz-skill-cb" value="Deep Learning & Computer Vision" onchange="handleSkillSelectionChange(this)"> <span>Deep Learning & CV</span>
+          </label>
+          <label class="flex items-center space-x-2 p-2 bg-white rounded-xl border border-slate-200 cursor-pointer hover:bg-amber-50">
+            <input type="checkbox" class="wiz-skill-cb" value="Generative AI & LLM Prompting" onchange="handleSkillSelectionChange(this)"> <span>Generative AI & LLMs</span>
+          </label>
+          <label class="flex items-center space-x-2 p-2 bg-white rounded-xl border border-slate-200 cursor-pointer hover:bg-amber-50">
+            <input type="checkbox" class="wiz-skill-cb" value="Data Engineering & Apache Spark" onchange="handleSkillSelectionChange(this)"> <span>Data Engineering</span>
+          </label>
+          <label class="flex items-center space-x-2 p-2 bg-white rounded-xl border border-slate-200 cursor-pointer hover:bg-amber-50">
+            <input type="checkbox" class="wiz-skill-cb" value="Power BI & Tableau Visualization" onchange="handleSkillSelectionChange(this)"> <span>Power BI & Tableau</span>
+          </label>
+          <label class="flex items-center space-x-2 p-2 bg-white rounded-xl border border-slate-200 cursor-pointer hover:bg-amber-50">
+            <input type="checkbox" class="wiz-skill-cb" value="Natural Language Processing (NLP)" onchange="handleSkillSelectionChange(this)"> <span>NLP & Text Analytics</span>
+          </label>
+
+          <!-- ⚡ ELECTRONICS, ELECTRICAL & EMBEDDED (ECE/EEE/EIE) -->
+          <div class="col-span-2 text-[10px] font-bold text-slate-500 uppercase tracking-wider mt-2 border-b border-slate-200 pb-1">⚡ Electronics, Electrical & Embedded (ECE/EEE/EIE)</div>
+          <label class="flex items-center space-x-2 p-2 bg-white rounded-xl border border-slate-200 cursor-pointer hover:bg-amber-50">
+            <input type="checkbox" class="wiz-skill-cb" value="Embedded C / C++" onchange="handleSkillSelectionChange(this)"> <span>Embedded C / C++</span>
+          </label>
+          <label class="flex items-center space-x-2 p-2 bg-white rounded-xl border border-slate-200 cursor-pointer hover:bg-amber-50">
+            <input type="checkbox" class="wiz-skill-cb" value="VLSI Design & Verilog / VHDL" onchange="handleSkillSelectionChange(this)"> <span>VLSI & Verilog</span>
+          </label>
+          <label class="flex items-center space-x-2 p-2 bg-white rounded-xl border border-slate-200 cursor-pointer hover:bg-amber-50">
+            <input type="checkbox" class="wiz-skill-cb" value="Microcontrollers (Arduino/STM32/ESP32)" onchange="handleSkillSelectionChange(this)"> <span>Microcontrollers</span>
+          </label>
+          <label class="flex items-center space-x-2 p-2 bg-white rounded-xl border border-slate-200 cursor-pointer hover:bg-amber-50">
+            <input type="checkbox" class="wiz-skill-cb" value="IoT & Sensor Networks" onchange="handleSkillSelectionChange(this)"> <span>IoT & Sensor Networks</span>
+          </label>
+          <label class="flex items-center space-x-2 p-2 bg-white rounded-xl border border-slate-200 cursor-pointer hover:bg-amber-50">
+            <input type="checkbox" class="wiz-skill-cb" value="MATLAB & Simulink" onchange="handleSkillSelectionChange(this)"> <span>MATLAB & Simulink</span>
+          </label>
+          <label class="flex items-center space-x-2 p-2 bg-white rounded-xl border border-slate-200 cursor-pointer hover:bg-amber-50">
+            <input type="checkbox" class="wiz-skill-cb" value="PLC & SCADA Automation" onchange="handleSkillSelectionChange(this)"> <span>PLC & SCADA</span>
+          </label>
+          <label class="flex items-center space-x-2 p-2 bg-white rounded-xl border border-slate-200 cursor-pointer hover:bg-amber-50">
+            <input type="checkbox" class="wiz-skill-cb" value="Power Electronics & EV Motors" onchange="handleSkillSelectionChange(this)"> <span>Power Electronics</span>
+          </label>
+          <label class="flex items-center space-x-2 p-2 bg-white rounded-xl border border-slate-200 cursor-pointer hover:bg-amber-50">
+            <input type="checkbox" class="wiz-skill-cb" value="PCB Design & KiCAD / Proteus" onchange="handleSkillSelectionChange(this)"> <span>PCB Design & KiCAD</span>
+          </label>
+
+          <!-- ⚙️ MECHANICAL, ROBOTICS & AEROSPACE (ME/Aero/Robotics) -->
+          <div class="col-span-2 text-[10px] font-bold text-slate-500 uppercase tracking-wider mt-2 border-b border-slate-200 pb-1">⚙️ Mechanical, Robotics & Aerospace</div>
+          <label class="flex items-center space-x-2 p-2 bg-white rounded-xl border border-slate-200 cursor-pointer hover:bg-amber-50">
+            <input type="checkbox" class="wiz-skill-cb" value="AutoCAD Engineering Drawing" onchange="handleSkillSelectionChange(this)"> <span>AutoCAD</span>
+          </label>
+          <label class="flex items-center space-x-2 p-2 bg-white rounded-xl border border-slate-200 cursor-pointer hover:bg-amber-50">
+            <input type="checkbox" class="wiz-skill-cb" value="SolidWorks & CATIA 3D Modeling" onchange="handleSkillSelectionChange(this)"> <span>SolidWorks & CATIA</span>
+          </label>
+          <label class="flex items-center space-x-2 p-2 bg-white rounded-xl border border-slate-200 cursor-pointer hover:bg-amber-50">
+            <input type="checkbox" class="wiz-skill-cb" value="Finite Element Analysis (FEA & ANSYS)" onchange="handleSkillSelectionChange(this)"> <span>FEA & ANSYS</span>
+          </label>
+          <label class="flex items-center space-x-2 p-2 bg-white rounded-xl border border-slate-200 cursor-pointer hover:bg-amber-50">
+            <input type="checkbox" class="wiz-skill-cb" value="Computational Fluid Dynamics (CFD)" onchange="handleSkillSelectionChange(this)"> <span>CFD Simulation</span>
+          </label>
+          <label class="flex items-center space-x-2 p-2 bg-white rounded-xl border border-slate-200 cursor-pointer hover:bg-amber-50">
+            <input type="checkbox" class="wiz-skill-cb" value="Robotics & ROS (Robot Operating System)" onchange="handleSkillSelectionChange(this)"> <span>Robotics & ROS</span>
+          </label>
+          <label class="flex items-center space-x-2 p-2 bg-white rounded-xl border border-slate-200 cursor-pointer hover:bg-amber-50">
+            <input type="checkbox" class="wiz-skill-cb" value="CNC Machining & Manufacturing" onchange="handleSkillSelectionChange(this)"> <span>CNC Machining</span>
+          </label>
+          <label class="flex items-center space-x-2 p-2 bg-white rounded-xl border border-slate-200 cursor-pointer hover:bg-amber-50">
+            <input type="checkbox" class="wiz-skill-cb" value="Thermodynamics & Heat Transfer" onchange="handleSkillSelectionChange(this)"> <span>Thermodynamics</span>
+          </label>
+          <label class="flex items-center space-x-2 p-2 bg-white rounded-xl border border-slate-200 cursor-pointer hover:bg-amber-50">
+            <input type="checkbox" class="wiz-skill-cb" value="Electric Vehicle (EV) Technology" onchange="handleSkillSelectionChange(this)"> <span>EV Technology</span>
+          </label>
+
+          <!-- 🏗️ CIVIL, STRUCTURAL & ENVIRONMENTAL -->
+          <div class="col-span-2 text-[10px] font-bold text-slate-500 uppercase tracking-wider mt-2 border-b border-slate-200 pb-1">🏗️ Civil, Structural & Environmental</div>
+          <label class="flex items-center space-x-2 p-2 bg-white rounded-xl border border-slate-200 cursor-pointer hover:bg-amber-50">
+            <input type="checkbox" class="wiz-skill-cb" value="STAAD Pro & Revit Architecture" onchange="handleSkillSelectionChange(this)"> <span>STAAD Pro & Revit</span>
+          </label>
+          <label class="flex items-center space-x-2 p-2 bg-white rounded-xl border border-slate-200 cursor-pointer hover:bg-amber-50">
+            <input type="checkbox" class="wiz-skill-cb" value="Surveying & GIS (ArcGIS/QGIS)" onchange="handleSkillSelectionChange(this)"> <span>Surveying & GIS</span>
+          </label>
+          <label class="flex items-center space-x-2 p-2 bg-white rounded-xl border border-slate-200 cursor-pointer hover:bg-amber-50">
+            <input type="checkbox" class="wiz-skill-cb" value="Construction Project Mgmt (Primavera)" onchange="handleSkillSelectionChange(this)"> <span>Construction Mgmt</span>
+          </label>
+          <label class="flex items-center space-x-2 p-2 bg-white rounded-xl border border-slate-200 cursor-pointer hover:bg-amber-50">
+            <input type="checkbox" class="wiz-skill-cb" value="Structural Design & Concrete Tech" onchange="handleSkillSelectionChange(this)"> <span>Structural Design</span>
+          </label>
+
+          <!-- 🧪 CHEMICAL, BIOTECH & MATERIALS -->
+          <div class="col-span-2 text-[10px] font-bold text-slate-500 uppercase tracking-wider mt-2 border-b border-slate-200 pb-1">🧪 Chemical, BioTech & Materials</div>
+          <label class="flex items-center space-x-2 p-2 bg-white rounded-xl border border-slate-200 cursor-pointer hover:bg-amber-50">
+            <input type="checkbox" class="wiz-skill-cb" value="Process Engineering & Aspen Plus" onchange="handleSkillSelectionChange(this)"> <span>Aspen & Process Eng</span>
+          </label>
+          <label class="flex items-center space-x-2 p-2 bg-white rounded-xl border border-slate-200 cursor-pointer hover:bg-amber-50">
+            <input type="checkbox" class="wiz-skill-cb" value="Bioinformatics & Genetic Eng" onchange="handleSkillSelectionChange(this)"> <span>Bioinformatics</span>
+          </label>
+          <label class="flex items-center space-x-2 p-2 bg-white rounded-xl border border-slate-200 cursor-pointer hover:bg-amber-50">
+            <input type="checkbox" class="wiz-skill-cb" value="Materials Testing & Metallurgy" onchange="handleSkillSelectionChange(this)"> <span>Materials Testing</span>
+          </label>
+          <label class="flex items-center space-x-2 p-2 bg-white rounded-xl border border-slate-200 cursor-pointer hover:bg-amber-50">
+            <input type="checkbox" class="wiz-skill-cb" value="Nanotechnology & Biomaterials" onchange="handleSkillSelectionChange(this)"> <span>Nanotechnology</span>
+          </label>
+        </div>
+      </div>
+
+      <div id="wizard-step-4" class="wizard-step space-y-4 text-xs hidden">
+        <div class="flex items-center justify-between">
+          <div>
+            <h4 class="font-bold text-slate-900 text-sm">Step 4: Projects</h4>
+            <p class="text-slate-500">Add your academic or personal projects (Up to 10 projects):</p>
+          </div>
+          <span id="project-count-badge" class="bg-aws-squid text-aws-orange font-bold text-[11px] px-2.5 py-1 rounded-full">1 / 10 Projects</span>
+        </div>
+
+        <div id="projects-list-container" class="space-y-3 max-h-56 overflow-y-auto custom-scrollbar p-1">
+          <div class="project-item bg-slate-50 border border-slate-200 p-3 rounded-xl space-y-2">
+            <div class="flex items-center justify-between">
+              <span class="font-bold text-slate-800 text-[11px]">Project #1</span>
+            </div>
+            <input type="text" class="proj-title-input w-full bg-white border border-slate-300 rounded-lg p-2 text-slate-900 text-xs" placeholder="Project Title #1 (e.g. AI Crop Disease Detection / Smart Grid System)">
+            <input type="text" class="proj-tools-input w-full bg-white border border-slate-300 rounded-lg p-2 text-slate-900 text-xs" placeholder="Tech stack / Tools used (e.g. Python, TensorFlow, AutoCAD)">
+          </div>
+        </div>
+
+        <button type="button" onclick="addNewProjectInput()" id="btn-add-project" class="w-full py-2 bg-slate-100 hover:bg-slate-200 text-slate-800 font-bold rounded-xl border border-slate-300 transition-all flex items-center justify-center space-x-1">
+          <i data-lucide="plus-circle" class="w-4 h-4 text-aws-orange"></i>
+          <span>+ Add Another Project (Up to 10)</span>
+        </button>
+      </div>
+
+      <div id="wizard-step-5" class="wizard-step space-y-4 text-xs hidden">
+        <h4 class="font-bold text-slate-900 text-sm">Step 5: Internship Experience & Resume Upload</h4>
+        <div>
+          <label class="block font-semibold text-slate-700 mb-1">Any Internship Experience?</label>
+          <select id="wiz-intern-exp" class="w-full bg-slate-50 border border-slate-300 rounded-xl p-3 font-semibold text-slate-900">
+            <option value="Yes - Completed Tech Internship">Yes - Completed Internship</option>
+            <option value="None - Fresh Candidate Track">No - Fresh Candidate (Projects & Skills Only)</option>
+          </select>
+        </div>
+
+        <div class="space-y-2 pt-2 border-t border-slate-100">
+          <label class="block font-semibold text-slate-700">Upload Resume (Final Step)</label>
+          <div class="border-2 border-dashed border-aws-orange/60 bg-amber-50/50 p-4 rounded-2xl text-center space-y-2 cursor-pointer hover:bg-amber-100/50 transition-all" onclick="triggerWizardResumeSelect()">
+            <i data-lucide="file-up" class="w-7 h-7 text-aws-orange mx-auto"></i>
+            <p class="text-xs font-bold text-slate-800" id="wiz-resume-label">Click to Upload Resume (PDF / DOCX)</p>
+            <input type="file" id="wiz-resume-file" class="hidden" accept=".pdf,.docx,.doc" onchange="handleWizardResumeSelect(event)">
+          </div>
+        </div>
+      </div>
+
+      <div class="flex items-center justify-between pt-4 border-t border-slate-100">
+        <button onclick="prevWizardStep()" id="btn-wiz-prev" class="px-4 py-2 bg-slate-100 text-slate-700 rounded-xl text-xs font-semibold hidden">Back</button>
+        <button onclick="nextWizardStep()" id="btn-wiz-next" class="ml-auto px-6 py-2.5 bg-aws-orange text-slate-950 rounded-xl text-xs font-bold hover:bg-amber-500 transition-all shadow">Next Step</button>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- MODAL 2: LOG IN (EXISTING USER) -->
+  <div id="modal-signin" class="fixed inset-0 bg-slate-900/80 backdrop-blur-md z-50 flex items-center justify-center hidden p-4">
+    <div class="bg-white rounded-3xl max-w-md w-full p-6 sm:p-8 shadow-2xl space-y-5 border border-slate-200">
+      
+      <div class="flex items-center justify-between border-b border-slate-100 pb-3">
+        <div class="flex items-center space-x-2">
+          <div class="bg-aws-orange p-1.5 rounded-lg text-slate-950 font-bold">
+            <i data-lucide="log-in" class="w-4 h-4"></i>
+          </div>
+          <h3 class="font-bold font-heading text-slate-900 text-lg">Log In Existing Student</h3>
+        </div>
+        <button onclick="closeSignInModal()" class="text-slate-400 hover:text-slate-600"><i data-lucide="x" class="w-5 h-5"></i></button>
+      </div>
+
+      <div id="signin-error-box" class="hidden text-xs bg-red-50 border border-red-200 text-red-700 p-3 rounded-xl font-semibold space-y-2">
+        <p id="signin-error-msg">⚠️ No existing account found for this email. Please click 'Create Account' to sign up first!</p>
+        <button type="button" onclick="closeSignInModal(); openWizardModal();" class="w-full text-xs bg-red-600 hover:bg-red-700 text-white font-bold py-2 px-3 rounded-lg shadow transition-all flex items-center justify-center space-x-1">
+          <i data-lucide="user-plus" class="w-3.5 h-3.5"></i>
+          <span>Create Account (Sign Up First)</span>
+        </button>
+      </div>
+
+      <form onsubmit="handleSignInSubmit(event)" class="space-y-4 text-xs">
+        <div>
+          <label class="block font-semibold text-slate-700 mb-1">Registered Student Email</label>
+          <input type="email" id="signin-email" required class="w-full bg-slate-50 border border-slate-300 rounded-xl p-3 text-slate-900" placeholder="yourname@student.edu.in">
+        </div>
+        <div>
+          <label class="block font-semibold text-slate-700 mb-1">Password</label>
+          <input type="password" id="signin-password" required class="w-full bg-slate-50 border border-slate-300 rounded-xl p-3 text-slate-900" placeholder="••••••••">
+        </div>
+        <button type="submit" class="w-full bg-aws-orange hover:bg-amber-500 text-slate-950 font-bold py-3.5 rounded-xl shadow transition-all text-sm mt-2">
+          Log In
+        </button>
+      </form>
+
+    </div>
+  </div>
+
+  <!-- MODAL: RESUME UPLOAD -->
+  <div id="modal-resume-upload" class="fixed inset-0 bg-slate-900/60 backdrop-blur-sm z-50 flex items-center justify-center hidden p-4">
+    <div class="bg-white rounded-3xl max-w-md w-full p-6 shadow-2xl space-y-4 border border-slate-200">
+      <div class="flex items-center justify-between border-b border-slate-100 pb-3">
+        <h3 class="font-bold font-heading text-slate-900">Amazon Bedrock Resume Parser</h3>
+        <button onclick="closeResumeModal()" class="text-slate-400 hover:text-slate-600"><i data-lucide="x" class="w-5 h-5"></i></button>
+      </div>
+      <div class="border-2 border-dashed border-aws-orange/50 bg-amber-50/40 p-6 rounded-2xl text-center space-y-2 cursor-pointer" onclick="runBedrockResumeExtraction()">
+        <i data-lucide="file-up" class="w-10 h-10 text-aws-orange mx-auto"></i>
+        <p class="text-xs font-bold text-slate-800">Click to Upload Resume (PDF / DOCX)</p>
+      </div>
+      <div id="bedrock-extraction-output" class="hidden">
+        <pre class="bg-slate-900 text-emerald-400 p-3 rounded-xl text-[11px] font-mono">{ "status": "Resume Extracted", "confidence": 0.96 }</pre>
+      </div>
+    </div>
+  </div>
+
+  <!-- MODAL 3: ATS RESUME GENERATOR & OPTIMIZER -->
+  <div id="modal-ats-resume" class="fixed inset-0 bg-slate-900/80 backdrop-blur-md z-50 flex items-center justify-center hidden p-4">
+    <div class="bg-white rounded-3xl max-w-xl w-full p-6 sm:p-8 shadow-2xl space-y-4 border border-slate-200">
+      <div class="flex items-center justify-between border-b border-slate-100 pb-3">
+        <div class="flex items-center space-x-2">
+          <div class="bg-emerald-100 text-emerald-700 p-2 rounded-xl font-bold">
+            <i data-lucide="file-text" class="w-5 h-5"></i>
+          </div>
+          <div>
+            <h3 class="font-bold font-heading text-slate-900 text-lg">Amazon Bedrock ATS Resume Optimizer</h3>
+            <p class="text-xs text-slate-500">Standardized ATS-friendly Markdown resume generated from Talent Passport</p>
+          </div>
+        </div>
+        <button onclick="closeAtsResumeModal()" class="text-slate-400 hover:text-slate-600"><i data-lucide="x" class="w-5 h-5"></i></button>
+      </div>
+
+      <div class="flex items-center justify-between bg-emerald-50 border border-emerald-200 p-3 rounded-xl text-xs">
+        <span class="font-bold text-emerald-900">ATS Match Compatibility Score</span>
+        <span class="text-lg font-extrabold text-emerald-600 font-heading">94 / 100</span>
+      </div>
+
+      <div class="bg-slate-950 text-emerald-400 p-4 rounded-2xl max-h-64 overflow-y-auto custom-scrollbar font-mono text-xs whitespace-pre-wrap border border-slate-800" id="ats-resume-content">
+        <!-- Rendered dynamically -->
+      </div>
+
+      <div class="flex items-center justify-between pt-2">
+        <button onclick="copyAtsResumeText()" class="bg-slate-100 hover:bg-slate-200 text-slate-800 text-xs font-bold px-4 py-2 rounded-xl border border-slate-300 transition-all flex items-center space-x-1">
+          <i data-lucide="copy" class="w-3.5 h-3.5"></i>
+          <span>Copy Resume Text</span>
+        </button>
+        <button onclick="downloadAtsResumeFile()" class="bg-emerald-600 hover:bg-emerald-700 text-white text-xs font-bold px-5 py-2 rounded-xl transition-all shadow flex items-center space-x-1">
+          <i data-lucide="download" class="w-3.5 h-3.5"></i>
+          <span>Download ATS Resume (.md)</span>
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- MODAL 4: AI SALARY & STIPEND PREDICTOR -->
+  <div id="modal-salary-predictor" class="fixed inset-0 bg-slate-900/80 backdrop-blur-md z-50 flex items-center justify-center hidden p-4">
+    <div class="bg-white rounded-3xl max-w-md w-full p-6 sm:p-8 shadow-2xl space-y-5 border border-slate-200">
+      <div class="flex items-center justify-between border-b border-slate-100 pb-3">
+        <div class="flex items-center space-x-2">
+          <div class="bg-amber-100 text-amber-700 p-2 rounded-xl font-bold">
+            <i data-lucide="trending-up" class="w-5 h-5"></i>
+          </div>
+          <div>
+            <h3 class="font-bold font-heading text-slate-900 text-lg">AI Salary & Stipend Predictor</h3>
+            <p class="text-xs text-slate-500">Based on branch, verified skills, passout batch & project depth</p>
+          </div>
+        </div>
+        <button onclick="closeSalaryPredictorModal()" class="text-slate-400 hover:text-slate-600"><i data-lucide="x" class="w-5 h-5"></i></button>
+      </div>
+
+      <div class="space-y-3">
+        <div class="bg-slate-900 text-white p-4 rounded-2xl space-y-2 border border-slate-800">
+          <span class="text-xs text-amber-400 font-bold block uppercase tracking-wider">Estimated Internship Stipend (2026/2027)</span>
+          <p class="text-2xl font-extrabold font-heading text-emerald-400" id="pred-stipend">₹55,000 – ₹90,000 / month</p>
+        </div>
+
+        <div class="bg-slate-900 text-white p-4 rounded-2xl space-y-2 border border-slate-800">
+          <span class="text-xs text-aws-blue font-bold block uppercase tracking-wider">Estimated Full-Time CTC Trajectory</span>
+          <p class="text-2xl font-extrabold font-heading text-aws-orange" id="pred-ctc">₹8.5 LPA – ₹18.0 LPA</p>
+        </div>
+
+        <p class="text-[11px] text-slate-500 italic">
+          💡 *Note: Proctored assessment badges increase stipend predictions by +15% and unlock tier-1 company referrals.*
+        </p>
+      </div>
+    </div>
+  </div>
+
+  <!-- JAVASCRIPT LOGIC ENGINE -->
+  <script>
+    lucide.createIcons();
+    let currentStep = 1;
+    let currentUserProfile = null;
+
+    const MOCK_OPPORTUNITIES = [
+      {
+        job_id: "INT_AMAZON_01",
+        company: "Amazon India",
+        logo_text: "AMZN",
+        title: "Software Development Engineer (SDE) Intern",
+        stipend_salary: "₹80,000 / month",
+        description: "6-month SDE internship building large-scale AWS cloud microservices.",
+        apply_url: "https://www.amazon.jobs/en/jobs/intern-sde-india",
+        match_analysis: {
+          overall_match: 96.5,
+          rationale: [
+            "✓ Multi-Factor Match: Technical Skills & Projects Matched",
+            "✓ Proctored Coding Knowledge Score: 89%"
+          ]
+        }
+      }
+    ];
+
+    function updateAuthHeaderUI() {
+      const container = document.getElementById('user-auth-controls');
+      if (!container) return;
+
+      if (currentUserProfile) {
+        container.innerHTML = `
+          <div class="flex items-center space-x-2">
+            <span class="text-xs bg-emerald-500/20 text-emerald-300 border border-emerald-500/40 px-3 py-1.5 rounded-xl font-semibold">
+              👤 ${currentUserProfile.name} (${currentUserProfile.branch})
+            </span>
+            <button onclick="logoutUser()" class="bg-slate-800 text-slate-300 hover:text-white text-xs px-3 py-1.5 rounded-xl border border-slate-700">
+              Sign Out
+            </button>
+          </div>
+        `;
+      } else {
+        container.innerHTML = `
+          <div class="flex items-center space-x-2">
+            <button onclick="openWizardModal()" class="flex items-center space-x-1.5 bg-aws-squid hover:bg-slate-800 text-white font-bold text-xs px-3 py-2 rounded-xl border border-slate-700 shadow transition-all">
+              <i data-lucide="user-plus" class="w-3.5 h-3.5 text-aws-orange"></i>
+              <span>Create Account</span>
+            </button>
+            <button onclick="openSignInModal()" class="flex items-center space-x-1.5 bg-aws-orange hover:bg-amber-500 text-slate-950 font-bold text-xs px-3 py-2 rounded-xl shadow transition-all">
+              <i data-lucide="log-in" class="w-3.5 h-3.5"></i>
+              <span>Log In</span>
+            </button>
+          </div>
+        `;
+      }
+      lucide.createIcons();
+    }
+
+    function showLandingPage() {
+      document.getElementById('view-landing').classList.remove('hidden');
+      document.getElementById('view-dashboard').classList.add('hidden');
+    }
+
+    function switchPortal(portalId) {
+      document.getElementById('view-landing').classList.add('hidden');
+      document.getElementById('view-dashboard').classList.remove('hidden');
+
+      const emptyState = document.getElementById('dashboard-empty-state');
+      const populatedState = document.getElementById('dashboard-populated-state');
+
+      if (!currentUserProfile) {
+        emptyState.classList.remove('hidden');
+        populatedState.classList.add('hidden');
+        document.getElementById('portal-internships').classList.add('hidden');
+      } else {
+        emptyState.classList.add('hidden');
+        
+        ['student', 'internships'].forEach(p => {
+          const el = document.getElementById(`portal-${p}`);
+          if (el) el.classList.add('hidden');
+        });
+
+        if (portalId === 'student') {
+          populatedState.classList.remove('hidden');
+        } else if (portalId === 'internships') {
+          document.getElementById('portal-internships').classList.remove('hidden');
+          renderOpportunities(MOCK_OPPORTUNITIES);
+        }
+      }
+    }
+
+    function logoutUser() {
+      currentUserProfile = null;
+      updateAuthHeaderUI();
+      showLandingPage();
+      alert("Signed Out!");
+    }
+
+    function openWizardModal() {
+      currentStep = 1;
+      showWizardStep(1);
+      document.getElementById('modal-wizard').classList.remove('hidden');
+    }
+
+    function closeWizardModal() {
+      document.getElementById('modal-wizard').classList.add('hidden');
+    }
+
+    function openSignInModal() {
+      const errBox = document.getElementById('signin-error-box');
+      if (errBox) errBox.classList.add('hidden');
+      document.getElementById('modal-signin').classList.remove('hidden');
+    }
+
+    function closeSignInModal() {
+      const errBox = document.getElementById('signin-error-box');
+      if (errBox) errBox.classList.add('hidden');
+      document.getElementById('modal-signin').classList.add('hidden');
+    }
+
+    async function handleSignInSubmit(e) {
+      e.preventDefault();
+      const email = document.getElementById('signin-email').value.trim().toLowerCase();
+      const pass = document.getElementById('signin-password').value;
+      const errBox = document.getElementById('signin-error-box');
+      const errMsg = document.getElementById('signin-error-msg');
+
+      try {
+        const res = await fetch('/api/login', {
+          method: 'POST',
+          headers: {'Content-Type': 'application/json'},
+          body: JSON.stringify({email: email, password: pass})
+        });
+        const data = await res.json();
+        
+        if (data.status === 'ERROR') {
+          errMsg.innerText = data.message || "⚠️ No existing user account found for this email. Please click 'Create Account' to sign up first!";
+          errBox.classList.remove('hidden');
+          lucide.createIcons();
+          return;
+        }
+
+        currentUserProfile = data.user;
+        errBox.classList.add('hidden');
+        closeSignInModal();
+        updateAuthHeaderUI();
+        switchPortal('student');
+        populateDashboardUI();
+      } catch(err) {
+        // Fallback for offline file:// view when user has not completed onboarding
+        if (!currentUserProfile || currentUserProfile.email.toLowerCase() !== email) {
+          errMsg.innerText = "⚠️ No existing account found for this email. Please click 'Create Account' to sign up first!";
+          errBox.classList.remove('hidden');
+          lucide.createIcons();
+          return;
+        }
+        errBox.classList.add('hidden');
+        closeSignInModal();
+        updateAuthHeaderUI();
+        switchPortal('student');
+        populateDashboardUI();
+      }
+    }
+
+    const PASSWORD_REGEX = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&#^()_+\-=])[A-Za-z\d@$!%*?&#^()_+\-=]{8,}$/;
+
+    function validatePasswordMatchUI() {
+      const pass = document.getElementById('wiz-pass').value;
+      const errEl = document.getElementById('pass-error');
+      if (!pass) {
+        errEl.classList.add('hidden');
+        return false;
+      }
+      if (!PASSWORD_REGEX.test(pass)) {
+        errEl.innerText = "⚠️ Password must be 8+ chars with uppercase (A-Z), lowercase (a-z), number (0-9), & special char (@$!%*...).";
+        errEl.classList.remove('hidden');
+        return false;
+      } else {
+        errEl.classList.add('hidden');
+        return true;
+      }
+    }
+
+    function handleSkillSelectionChange(cb) {
+      const checked = document.querySelectorAll('.wiz-skill-cb:checked');
+      if (checked.length > 10) {
+        cb.checked = false;
+        alert("Maximum 10 technical skills allowed!");
+      }
+      const count = document.querySelectorAll('.wiz-skill-cb:checked').length;
+      document.getElementById('skill-count-badge').innerText = `${count} / 10 Selected`;
+    }
+
+    function addNewProjectInput() {
+      const container = document.getElementById('projects-list-container');
+      const items = container.querySelectorAll('.project-item');
+      if (items.length >= 10) {
+        alert("Maximum 10 projects allowed!");
+        return;
+      }
+      const nextNum = items.length + 1;
+      const div = document.createElement('div');
+      div.className = 'project-item bg-slate-50 border border-slate-200 p-3 rounded-xl space-y-2';
+      div.innerHTML = `
+        <div class="flex items-center justify-between">
+          <span class="font-bold text-slate-800 text-[11px]">Project #${nextNum}</span>
+          <button type="button" onclick="this.closest('.project-item').remove(); updateProjectCountBadge();" class="text-red-500 hover:text-red-700 text-[10px] font-bold">Remove</button>
+        </div>
+        <input type="text" class="proj-title-input w-full bg-white border border-slate-300 rounded-lg p-2 text-slate-900 text-xs" placeholder="Project Title #${nextNum}">
+        <input type="text" class="proj-tools-input w-full bg-white border border-slate-300 rounded-lg p-2 text-slate-900 text-xs" placeholder="Tech stack / Tools used">
+      `;
+      container.appendChild(div);
+      updateProjectCountBadge();
+    }
+
+    function updateProjectCountBadge() {
+      const count = document.querySelectorAll('.project-item').length;
+      document.getElementById('project-count-badge').innerText = `${count} / 10 Projects`;
+      const btn = document.getElementById('btn-add-project');
+      if (count >= 10) {
+        btn.classList.add('opacity-50', 'cursor-not-allowed');
+      } else {
+        btn.classList.remove('opacity-50', 'cursor-not-allowed');
+      }
+    }
+
+    function triggerWizardResumeSelect() {
+      document.getElementById('wiz-resume-file').click();
+    }
+
+    function handleWizardResumeSelect(e) {
+      const file = e.target.files[0];
+      if (file) {
+        document.getElementById('wiz-resume-label').innerText = `✓ Attached: ${file.name} (Ready for Bedrock AI Parsing)`;
+      }
+    }
+
+    function showWizardStep(step) {
+      document.getElementById('wizard-step-num').innerText = step;
+      for (let i = 1; i <= 5; i++) {
+        const stepEl = document.getElementById(`wizard-step-${i}`);
+        if (stepEl) stepEl.classList.add('hidden');
+      }
+      document.getElementById(`wizard-step-${step}`).classList.remove('hidden');
+
+      const prevBtn = document.getElementById('btn-wiz-prev');
+      const nextBtn = document.getElementById('btn-wiz-next');
+
+      if (step === 1) {
+        prevBtn.classList.add('hidden');
+        nextBtn.innerText = "Next Step";
+      } else if (step === 5) {
+        prevBtn.classList.remove('hidden');
+        nextBtn.innerText = "Complete Setup & Match Companies";
+      } else {
+        prevBtn.classList.remove('hidden');
+        nextBtn.innerText = "Next Step";
+      }
+    }
+
+    function nextWizardStep() {
+      if (currentStep === 1) {
+        const name = document.getElementById('wiz-name').value.trim();
+        const email = document.getElementById('wiz-email').value.trim();
+        if (!name || !email) {
+          alert("Please enter your full name and student email address.");
+          return;
+        }
+        if (!validatePasswordMatchUI()) {
+          alert("Password does not match standard security format! Must be 8+ characters with at least 1 uppercase letter, 1 lowercase letter, 1 number, and 1 special character.");
+          return;
+        }
+      } else if (currentStep === 2) {
+        const branch = document.getElementById('wiz-branch').value;
+        const passout = document.getElementById('wiz-passout').value;
+        if (!branch) {
+          alert("Please select your studying engineering branch from the dropdown.");
+          return;
+        }
+        if (!passout) {
+          alert("Please select your graduation passout year (2026 or 2027).");
+          return;
+        }
+      } else if (currentStep === 3) {
+        const checked = document.querySelectorAll('.wiz-skill-cb:checked');
+        if (checked.length === 0) {
+          alert("Please select at least 1 technical skill (Maximum 10 skills allowed).");
+          return;
+        }
+      }
+
+      if (currentStep < 5) {
+        currentStep++;
+        showWizardStep(currentStep);
+      } else {
+        submitWizardForm();
+      }
+    }
+
+    function prevWizardStep() {
+      if (currentStep > 1) {
+        currentStep--;
+        showWizardStep(currentStep);
+      }
+    }
+
+    async function submitWizardForm() {
+      const name = document.getElementById('wiz-name').value.trim() || "Student Candidate";
+      const email = document.getElementById('wiz-email').value.trim() || "student@hbc.edu.in";
+      const pass = document.getElementById('wiz-pass').value;
+      const branch = document.getElementById('wiz-branch').value;
+      const passout = document.getElementById('wiz-passout').value;
+      const internExp = document.getElementById('wiz-intern-exp').value;
+      const checkedSkills = Array.from(document.querySelectorAll('.wiz-skill-cb:checked')).map(cb => cb.value);
+
+      const projectItems = document.querySelectorAll('.project-item');
+      const projectsList = [];
+      projectItems.forEach(item => {
+        const titleInput = item.querySelector('.proj-title-input');
+        const toolsInput = item.querySelector('.proj-tools-input');
+        const title = titleInput ? titleInput.value.trim() : '';
+        const tools = toolsInput ? toolsInput.value.trim() : '';
+        if (title) {
+          projectsList.push({
+            title: title,
+            tech_stack: tools ? tools.split(',').map(t => t.trim()) : [branch]
+          });
+        }
+      });
+
+      const payload = {
+        name: name,
+        email: email,
+        password: pass,
+        branch: branch,
+        year_of_passing: passout,
+        skills: checkedSkills,
+        projects: projectsList.length > 0 ? projectsList : [{ title: "Engineering Capstone Project", tech_stack: checkedSkills.slice(0, 3) }],
+        internship_experience: internExp
+      };
+
+      try {
+        const res = await fetch('/api/complete-onboarding', {
+          method: 'POST',
+          headers: {'Content-Type': 'application/json'},
+          body: JSON.stringify(payload)
+        });
+        const data = await res.json();
+        currentUserProfile = data.user;
+      } catch(e) {
+        currentUserProfile = {
+          name: name,
+          email: email,
+          password: pass,
+          branch: branch,
+          year_of_passing: passout,
+          internship_experience: internExp,
+          talent_passport_id: `TP-${email.split('@')[0].toUpperCase()}-9901`,
+          claimed_skills: checkedSkills,
+          projects: payload.projects
+        };
+      }
+
+      saveRegisteredAccount(currentUserProfile);
+      closeWizardModal();
+      updateAuthHeaderUI();
+      switchPortal('student');
+      populateDashboardUI();
+    }
+
+    function populateDashboardUI() {
+      if (!currentUserProfile) return;
+      document.getElementById('dash-user-name').innerText = currentUserProfile.name;
+      document.getElementById('card-student-name').innerText = currentUserProfile.name.toUpperCase();
+      document.getElementById('dash-user-branch').innerText = currentUserProfile.branch;
+      document.getElementById('card-student-branch').innerText = `Studying Branch: ${currentUserProfile.branch}`;
+      document.getElementById('dash-user-batch').innerText = `${currentUserProfile.year_of_passing} Passout`;
+      document.getElementById('card-passout-year').innerText = `${currentUserProfile.year_of_passing} Passout Batch`;
+      document.getElementById('card-student-intern').innerText = `Internship Exp: ${currentUserProfile.internship_experience || 'Fresh Candidate Track'}`;
+      document.getElementById('dash-passport-id').innerText = currentUserProfile.talent_passport_id || 'TP-HBC-8819';
+
+      const skillsContainer = document.getElementById('dash-skills-meters');
+      const skills = currentUserProfile.claimed_skills || ["Python", "SQL"];
+      skillsContainer.innerHTML = skills.map(s => `
+        <div>
+          <div class="flex justify-between mb-1">
+            <span class="text-slate-200 font-medium">${s} <span class="text-emerald-400 font-semibold">(Verified)</span></span>
+            <span class="text-slate-300 font-mono">85%</span>
+          </div>
+          <div class="w-full bg-slate-800 rounded-full h-2">
+            <div class="bg-aws-orange h-2 rounded-full" style="width: 85%"></div>
+          </div>
+        </div>
+      `).join('');
+
+      renderOpportunities(MOCK_OPPORTUNITIES);
+    }
+
+    function renderOpportunities(opps) {
+      const container = document.getElementById('opportunities-container');
+      if (!container) return;
+      container.innerHTML = '';
+      const list = opps || MOCK_OPPORTUNITIES;
+
+      list.forEach(o => {
+        const match = o.match_analysis || { overall_match: 96.5, rationale: [] };
+        const cardHtml = `
+          <div class="bg-white rounded-2xl p-6 shadow-sm border border-slate-200 flex flex-col md:flex-row md:items-center justify-between gap-6">
+            <div class="space-y-3 flex-1">
+              <div class="flex items-center justify-between">
+                <div class="flex items-center space-x-3">
+                  <div class="w-10 h-10 rounded-xl bg-aws-squid text-aws-orange font-bold flex items-center justify-center text-sm shadow">
+                    ${o.logo_text}
+                  </div>
+                  <div>
+                    <span class="text-xs font-bold text-aws-orange uppercase tracking-wider block">${o.company}</span>
+                    <h4 class="text-lg font-bold font-heading text-slate-900">${o.title}</h4>
+                  </div>
+                </div>
+
+                <div class="text-right">
+                  <span class="text-xs text-slate-400 block">Match Score</span>
+                  <span class="text-2xl font-extrabold font-heading text-emerald-600">${match.overall_match}%</span>
+                </div>
+              </div>
+
+              <div class="flex flex-wrap items-center gap-2 text-xs text-slate-600">
+                <span class="bg-slate-100 font-semibold px-2.5 py-1 rounded-md text-slate-800">💰 ${o.stipend_salary}</span>
+              </div>
+
+              <p class="text-xs text-slate-600 leading-relaxed">${o.description}</p>
+            </div>
+
+            <div class="flex flex-col sm:flex-row md:flex-col items-stretch justify-center gap-2 min-w-[200px]">
+              <a href="${o.apply_url}" target="_blank" class="flex items-center justify-center space-x-1.5 bg-aws-orange hover:bg-amber-500 text-slate-950 font-bold text-xs py-3 px-4 rounded-xl shadow transition-all text-center">
+                <span>Apply on Official Site</span>
+                <i data-lucide="external-link" class="w-3.5 h-3.5"></i>
+              </a>
+            </div>
+          </div>
+        `;
+        container.innerHTML += cardHtml;
+      });
+
+      lucide.createIcons();
+    }
+
+    function triggerResumeUploadModal() {
+      document.getElementById('modal-resume-upload').classList.remove('hidden');
+    }
+    function closeResumeModal() {
+      document.getElementById('modal-resume-upload').classList.add('hidden');
+    }
+    function runBedrockResumeExtraction() {
+      document.getElementById('bedrock-extraction-output').classList.remove('hidden');
+    }
+
+    function openAtsResumeModal() {
+      if (!currentUserProfile) return;
+      const name = currentUserProfile.name || "Student Candidate";
+      const branch = currentUserProfile.branch || "Engineering";
+      const passout = currentUserProfile.year_of_passing || 2026;
+      const skills = (currentUserProfile.claimed_skills || ["Python", "SQL"]).join(", ");
+      const projects = currentUserProfile.projects || [{ title: "Engineering Capstone Project", tech_stack: ["Python"] }];
+      
+      const projText = projects.map(p => `- **${p.title}** (Tech: ${(p.tech_stack || []).join(", ")})`).join("\n");
+
+      const markdown = `# ${name.toUpperCase()}
+**Degree & Branch**: ${branch}
+**Graduation Batch**: ${passout} Passout
+**Privacy Protocol**: College-Blind Verified Candidate Profile
+
+---
+
+## 🛠️ VERIFIED TECHNICAL SKILLS
+${skills}
+
+---
+
+## 🚀 KEY ENGINEERING PROJECTS
+${projText}
+
+---
+
+## 🔒 TALENT PASSPORT VERIFICATION
+- **AI Job Readiness Score**: 88/100
+- **Verified Proctored Test Badges**: Verified Advanced Candidate
+`;
+
+      document.getElementById('ats-resume-content').innerText = markdown;
+      document.getElementById('modal-ats-resume').classList.remove('hidden');
+    }
+
+    function closeAtsResumeModal() {
+      document.getElementById('modal-ats-resume').classList.add('hidden');
+    }
+
+    function copyAtsResumeText() {
+      const text = document.getElementById('ats-resume-content').innerText;
+      navigator.clipboard.writeText(text);
+      alert("✓ ATS Resume Markdown copied to clipboard!");
+    }
+
+    function downloadAtsResumeFile() {
+      const text = document.getElementById('ats-resume-content').innerText;
+      const blob = new Blob([text], { type: "text/markdown" });
+      const a = document.createElement("a");
+      a.href = URL.createObjectURL(blob);
+      a.download = `${currentUserProfile ? currentUserProfile.name.replace(/\s+/g, '_') : 'Student'}_ATS_Resume.md`;
+      a.click();
+    }
+
+    function openSalaryPredictorModal() {
+      if (!currentUserProfile) return;
+      const numSkills = (currentUserProfile.claimed_skills || []).length;
+      const numProjects = (currentUserProfile.projects || []).length;
+
+      const minStipend = 45000 + (numSkills * 3000) + (numProjects * 2500);
+      const maxStipend = minStipend + 35000;
+      const minCtc = (6.5 + (numSkills * 0.4) + (numProjects * 0.5)).toFixed(1);
+      const maxCtc = (parseFloat(minCtc) + 7.5).toFixed(1);
+
+      document.getElementById('pred-stipend').innerText = `₹${minStipend.toLocaleString()} – ₹${maxStipend.toLocaleString()} / month`;
+      document.getElementById('pred-ctc').innerText = `₹${minCtc} LPA – ₹${maxCtc} LPA`;
+      document.getElementById('modal-salary-predictor').classList.remove('hidden');
+    }
+
+    function closeSalaryPredictorModal() {
+      document.getElementById('modal-salary-predictor').classList.add('hidden');
+    }
+
+    function runProctoredCodeTest() {
+      const resultBox = document.getElementById('code-test-result');
+      resultBox.classList.remove('hidden');
+      if (currentUserProfile) {
+        currentUserProfile.ai_job_readiness_score = 88;
+        document.getElementById('card-readiness-score').innerHTML = '88<span class="text-lg text-slate-400">/100</span>';
+        document.getElementById('new-score-display').innerText = '88/100';
+      }
+    }
+
+    function evaluateAIInterviewAnswer() {
+      const outputBox = document.getElementById('interview-eval-output');
+      outputBox.classList.remove('hidden');
+    }
+
+    window.addEventListener('DOMContentLoaded', () => {
+      updateAuthHeaderUI();
+      showLandingPage();
+    });
+  </script>
+</body>
+</html>

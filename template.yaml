@@ -1,0 +1,57 @@
+AWSTemplateFormatVersion: '2010-09-09'
+Transform: AWS::Serverless-2016-10-31
+Description: HireBeyondCampus — AWS Builder Center Shipping Infrastructure (Serverless + Bedrock + DynamoDB + Cognito)
+
+Globals:
+  Function:
+    Timeout: 30
+    MemorySize: 512
+    Runtime: python3.13
+    Environment:
+      Variables:
+        TABLE_NAME: !Ref HBCStudentsTable
+
+Resources:
+  # 1. Single-Table DynamoDB Database
+  HBCStudentsTable:
+    Type: AWS::Serverless::SimpleTable
+    Properties:
+      TableName: HBC_TalentPassport
+      PrimaryKey:
+        Name: email
+        Type: String
+
+  # 2. Amazon Cognito User Pool with Password Security Rules
+  HBCCognitoUserPool:
+    Type: AWS::Cognito::UserPool
+    Properties:
+      UserPoolName: HBC_UserPool
+      Policies:
+        PasswordPolicy:
+          MinimumLength: 8
+          RequireUppercase: true
+          RequireLowercase: true
+          RequireNumbers: true
+          RequireSymbols: true
+
+  # 3. AWS Lambda API Server & AI Engine
+  HBCBackendApiFunction:
+    Type: AWS::Serverless::Function
+    Properties:
+      CodeUri: ./
+      Handler: server.run
+      Policies:
+        - AmazonBedrockFullAccess
+        - DynamoDBCrudPolicy:
+            TableName: !Ref HBCStudentsTable
+      Events:
+        ApiEvent:
+          Type: Api
+          Properties:
+            Path: /{proxy+}
+            Method: ANY
+
+Outputs:
+  HBCWebEndpoint:
+    Description: Live API Gateway Endpoint URL
+    Value: !Sub "https://${ServerlessRestApi}.execute-api.${AWS::Region}.amazonaws.com/Prod/"

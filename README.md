@@ -1,4 +1,4 @@
-# HireBeyondCampus (HBC)
+# HireBeyondCampus (HBC) 
 
 > **AI-Powered Placement & Opportunity Engine for Engineering Students Across India**  
 > *"Talent should be discovered, not limited by campus location."*
